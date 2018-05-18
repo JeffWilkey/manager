@@ -3,3 +3,5 @@
 
 #### Technologies Used
 - React Native
+- Redux
+- Firebase
