@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { SafeAreaView, View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
-import { Card, CardSection, Input, Button } from './common';
+import { Card, CardSection, Input, Button, Spinner } from './common';
 
 class LoginForm extends Component {
   onEmailChange(text) {
@@ -19,6 +19,18 @@ class LoginForm extends Component {
     this.props.loginUser({ email, password });
   }
 
+  renderButton() {
+    if (this.props.loading) {
+      return <Spinner />;
+    }
+
+    return (
+      <Button onPress={this.onButtonPress.bind(this)}>
+        Log In
+      </Button>
+    );
+  }
+
   renderError() {
     if (this.props.error) {
       return (
@@ -33,58 +45,48 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.loginForm}>
-        <Card>
-          <CardSection>
-            <Input
-              label="Email"
-              placeholder="email@gmail.com"
-              onChangeText={this.onEmailChange.bind(this)}
-              value={this.props.email}
-            />
-          </CardSection>
-          <CardSection>
-            <Input
-              secureTextEntry
-              label="Password"
-              placeholder="password"
-              onChangeText={this.onPasswordChange.bind(this)}
-              value={this.props.password}
-            />
-          </CardSection>
+      <Card>
+        <CardSection>
+          <Input
+            label="Email"
+            placeholder="email@gmail.com"
+            onChangeText={this.onEmailChange.bind(this)}
+            value={this.props.email}
+          />
+        </CardSection>
+        <CardSection>
+          <Input
+            secureTextEntry
+            label="Password"
+            placeholder="password"
+            onChangeText={this.onPasswordChange.bind(this)}
+            value={this.props.password}
+          />
+        </CardSection>
 
-          {this.renderError()}
+        {this.renderError()}
 
-          <CardSection>
-            <Button onPress={this.onButtonPress.bind(this)}>
-              Log In
-            </Button>
-          </CardSection>
-        </Card>
-      </SafeAreaView>
+        <CardSection>
+          {this.renderButton()}
+        </CardSection>
+      </Card>
     );
   }
 }
 
 const styles = {
-  loginForm: {
-    marginTop: 50
-  },
   errorTextStyle: {
     fontSize: 20,
     alignSelf: 'center',
     color: 'red',
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 10
   }
 };
 
-const mapStateToProps = state => {
-  return {
-    email: state.auth.email,
-    password: state.auth.password,
-    error: state.auth.error
-  };
+const mapStateToProps = ({ auth }) => {
+  const { email, password, error, loading } = auth;
+
+  return { email, password, error, loading };
 };
 
 export default connect(mapStateToProps, {
