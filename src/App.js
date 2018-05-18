@@ -3,19 +3,27 @@ import { View, Text } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import firebase from 'firebase';
+import {
+  FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_DB_URL,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_MESSAGE_SENDER_ID
+} from 'react-native-dotenv';
 import reducers from './reducers';
 import LoginForm from './components/LoginForm';
+
 
 
 class App extends Component {
   componentWillMount() {
     const config = {
-      apiKey: 'AIzaSyD82strjf_pUt36LGIY_-vxai_qxrJ0U6s',
-      authDomain: 'manager-c73eb.firebaseapp.com',
-      databaseURL: 'https://manager-c73eb.firebaseio.com',
-      projectId: 'manager-c73eb',
-      storageBucket: 'manager-c73eb.appspot.com',
-      messagingSenderId: '578256335061'
+      apiKey: FIREBASE_API_KEY,
+      authDomain: FIREBASE_AUTH_DOMAIN,
+      databaseURL: FIREBASE_DB_URL,
+      projectId: FIREBASE_PROJECT_ID,
+      storageBucket: '',
+      messagingSenderId: FIREBASE_MESSAGE_SENDER_ID
     };
     firebase.initializeApp(config);
   }
