@@ -6,16 +6,17 @@
 - Redux
 - Firebase
 
-#### Setup
+### Setup
 **This is assuming you already have XCode up to date and react-native-cli installed**
 *Estimated Time: 5 minutes*
 
 - run `npm install`
 - run `touch .env`
-- use keys from ./.env-example
-- Login to your firebase console
+- take keys from `/.env-example` and place them into your new `.env` file, we'll add values later
+- Create or login to an account at [Firebase](https://firebase.google.com/)
+- Once logged in click *Go To Console* at the top right of the page
 - Create a firebase database (call it whatever you want)
-- Under authentication go to Sign-In Method and choose Email / Password
+- Visit *Authentication* on the panel to the left, go to *Sign-In Method* and choose **Email/Password**
 - Click the first Enable switch but **do not enable Email link (Passwordless sign-in)**
 - When that's done click *Web Setup* on the top right corner and you should see something like:
 ```
