@@ -4,6 +4,7 @@ import {
   EMPLOYEE_UPDATE,
   EMPLOYEE_CREATE,
   EMPLOYEE_SAVE,
+  EMPLOYEE_DELETE,
   EMPLOYEES_FETCH_SUCCESS
 } from './types';
 
@@ -36,6 +37,19 @@ export const employeeSave = ({ name, phone, shift, uid }) => {
       .set({ name, phone, shift })
       .then(() => {
         dispatch({ type: EMPLOYEE_SAVE });
+        Actions.main({ type: 'reset' });
+      });
+  };
+};
+
+export const employeeDelete = ({ uid }) => {
+  const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+      .remove()
+      .then(() => {
+        dispatch({ type: EMPLOYEE_DELETE });
         Actions.main({ type: 'reset' });
       });
   };
